@@ -7,31 +7,6 @@ import TokenAnimation from './TokenAnimation';
 
 const networks = [
   {
-    id: 'ethereum',
-    name: 'Ethereum Testnet',
-    icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M11.9978 2L11.8435 2.53101V15.7785L11.9978 15.9327L18.1459 12.143L11.9978 2Z" fill="#343434"/>
-      <path d="M11.9978 2L5.84961 12.143L11.9978 15.9327V9.45377V2Z" fill="#8C8C8C"/>
-      <path d="M11.9978 16.9736L11.9109 17.0802V21.7778L11.9978 22L18.15 13.1855L11.9978 16.9736Z" fill="#3C3C3B"/>
-      <path d="M11.9978 22V16.9736L5.84961 13.1855L11.9978 22Z" fill="#8C8C8C"/>
-      <path d="M11.9978 15.9327L18.1459 12.143L11.9978 9.45377V15.9327Z" fill="#141414"/>
-      <path d="M5.84961 12.143L11.9978 15.9327V9.45377L5.84961 12.143Z" fill="#393939"/>
-    </svg>,
-    tokenSymbol: 'ETH',
-  },
-  {
-    id: 'polygon',
-    name: 'Polygon Mumbai',
-    icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2L3 7V17L12 22L21 17V7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M12 22V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M21 7L12 12L3 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M3 17L12 12L21 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M12 2V7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>,
-    tokenSymbol: 'MATIC',
-  },
-  {
     id: 'sepolia',
     name: 'Sepolia Testnet',
     icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +21,7 @@ const networks = [
 const FaucetForm = () => {
   const { toast } = useToast();
   const [walletAddress, setWalletAddress] = useState('');
-  const [selectedNetwork, setSelectedNetwork] = useState<typeof networks[0] | null>(null);
+  const [selectedNetwork, setSelectedNetwork] = useState<typeof networks[0]>(networks[0]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [transactionHash, setTransactionHash] = useState('');
@@ -65,15 +40,6 @@ const FaucetForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!selectedNetwork) {
-      toast({
-        title: "Network required",
-        description: "Please select a network first",
-        variant: "destructive",
-      });
-      return;
-    }
     
     if (!walletAddress) {
       toast({
@@ -157,7 +123,7 @@ const FaucetForm = () => {
           <button 
             type="submit" 
             className="faucet-button w-full"
-            disabled={isLoading || !selectedNetwork}
+            disabled={isLoading}
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
@@ -170,7 +136,7 @@ const FaucetForm = () => {
             ) : (
               <span className="flex items-center justify-center">
                 <ArrowDownIcon size={18} className="mr-2" />
-                Request {selectedNetwork ? selectedNetwork.tokenSymbol : 'Tokens'}
+                Request {selectedNetwork.tokenSymbol}
               </span>
             )}
           </button>
