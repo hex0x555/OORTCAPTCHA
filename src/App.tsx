@@ -24,4 +24,34 @@ const App = () => (
   </QueryClientProvider>
 );
 
+// // export default App;
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// // import Web3 from 'web3';
+// import './App.css'; // Import the CSS file
+
+// function App() {
+// 
+
+//   return (
+//     <div className="App">
+//       <h1>OORT CAPTCHA</h1>
+//       <div className="captcha-grid">
+//         {gridImages.map((image, index) => (
+//           <img
+//             key={index}
+//             src={`data:image/png;base64,${image}`}
+//             alt="captcha"
+//             onClick={() => handleImageClick(index)}
+//             className={selectedImages.includes(index) ? 'selected' : ''}
+//           />
+//         ))}
+//       </div>
+//       <button onClick={handleVerifyCaptcha}>Verify CAPTCHA</button>
+//       {/* <button onClick={handleSignMessage}>Sign Message</button> */}
+//       <button onClick={handleVerifySignature}>Verify Signature</button>
+//     </div>
+//   );
+// }
+
 export default App;

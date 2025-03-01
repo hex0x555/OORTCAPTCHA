@@ -1,9 +1,10 @@
-
-import { useState } from 'react';
-import { useToast } from "@/hooks/use-toast";
+import { useEffect, useState } from 'react';
 import { CopyIcon, ArrowDownIcon } from 'lucide-react';
 import NetworkSelector from './NetworkSelector';
 import TokenAnimation from './TokenAnimation';
+import CaptchaGrid from './CaptchaGrid';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 const networks = [
   {
@@ -44,12 +45,77 @@ const networks = [
 ];
 
 const FaucetForm = () => {
-  const { toast } = useToast();
   const [walletAddress, setWalletAddress] = useState('');
   const [selectedNetwork, setSelectedNetwork] = useState<typeof networks[0] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [transactionHash, setTransactionHash] = useState('');
+
+  const [gridImages, setGridImages] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [message, setMessage] = useState('Please verify your identity');
+  const [signature, setSignature] = useState('');
+  const [showCaptcha, setShowCaptcha] = useState(false);
+  const [verified, setVerified] = useState(false);
+
+  const handleVerify = (success: boolean) => {
+    if (success) {
+      setVerified(true);
+      toast.success("Verification successful!");
+    } else {
+      toast.error("Verification failed. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    // Fetch CAPTCHA images on component mount
+    axios.get('http://localhost:5000/generate_captcha')
+      .then(response => {
+        setGridImages(response.data.grid_images);
+      })
+      .catch(error => {
+        console.error('Error fetching CAPTCHA images:', error);
+      });
+  }, []);
+
+  const handleImageClick = (index) => {
+    setSelectedImages(prevSelectedImages => {
+      if (prevSelectedImages.includes(index)) {
+        return prevSelectedImages.filter(image => image !== index);
+      } else {
+        return [...prevSelectedImages, index];
+      }
+    });
+  };
+
+  const handleVerifyCaptcha = () => {
+    axios.post('http://localhost:5000/verify_captcha', { selectedImages })
+      .then(response => {
+        if (response.data.result === 'Correct') {
+          setVerified(true);
+          toast.success('CAPTCHA verified successfully');
+        } else {
+          toast.error('CAPTCHA verification failed');
+        }
+      })
+      .catch(error => {
+        console.error('Error verifying CAPTCHA:', error);
+      });
+  };
+
+  const handleVerifySignature = () => {
+    axios.post('http://localhost:5000/verify_signature', { message, signature, walletAddress })
+      .then(response => {
+        if (response.data.result === 'Signature verified') {
+          alert('Signature verified successfully');
+        } else {
+          alert('Signature verification failed');
+        }
+      })
+      .catch(error => {
+        console.error('Error verifying signature:', error);
+      });
+  };
 
   const handleNetworkSelect = (network: typeof networks[0]) => {
     setSelectedNetwork(network);
@@ -57,46 +123,36 @@ const FaucetForm = () => {
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(transactionHash);
-    toast({
-      title: "Copied to clipboard",
-      description: "Transaction hash copied to clipboard",
-    });
+    toast.success("Transaction hash copied to clipboard");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!selectedNetwork) {
-      toast({
-        title: "Network required",
-        description: "Please select a network first",
-        variant: "destructive",
-      });
+      toast.error("Network required!");
       return;
     }
-    
+
     if (!walletAddress) {
-      toast({
-        title: "Wallet address required",
-        description: "Please enter your wallet address",
-        variant: "destructive",
-      });
+      toast.error("Wallet address required");
       return;
     }
-    
+
+    if (!verified) {
+      setShowCaptcha(true);
+      return;
+    }
+
     setIsLoading(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
       setIsSuccess(true);
       setTransactionHash('0x' + Math.random().toString(16).substr(2, 64));
-      
-      toast({
-        title: "Tokens sent!",
-        description: `${selectedNetwork.tokenSymbol} tokens have been sent to your wallet`,
-      });
-      
+      toast.success("Tokens sent!");
+
       // Reset success state after animation
       setTimeout(() => {
         setIsSuccess(false);
@@ -112,7 +168,7 @@ const FaucetForm = () => {
           selectedNetwork={selectedNetwork}
           onNetworkSelect={handleNetworkSelect}
         />
-        
+
         <div className="space-y-4">
           <h3 className="text-lg font-medium mb-2 text-center md:text-left text-yellow-100">
             Your Wallet Address
@@ -126,12 +182,12 @@ const FaucetForm = () => {
             disabled={isLoading}
           />
         </div>
-        
+
         <TokenAnimation 
           isActive={isSuccess} 
           tokenSymbol={selectedNetwork?.tokenSymbol || 'TOKEN'} 
         />
-        
+
         {transactionHash && (
           <div className="p-4 bg-blue-800/30 rounded-lg animate-fade-in">
             <div className="flex items-center justify-between">
@@ -152,12 +208,25 @@ const FaucetForm = () => {
             </div>
           </div>
         )}
-        
+
+        {showCaptcha && (
+          <div className="pt-4">
+            <CaptchaGrid onVerify={handleVerify} />
+            <button 
+              type="button" 
+              className="faucet-button w-full mt-4"
+              onClick={handleVerifyCaptcha}
+            >
+              Verify CAPTCHA
+            </button>
+          </div>
+        )}
+
         <div className="pt-4">
           <button 
             type="submit" 
             className="faucet-button w-full"
-            disabled={isLoading || !selectedNetwork}
+            disabled={isLoading || !selectedNetwork || showCaptcha}
           >
             {isLoading ? (
               <span className="flex items-center justify-center">

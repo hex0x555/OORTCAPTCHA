@@ -40,3 +40,20 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.captcha-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
+  gap: 10px; /* Adjust the gap between images as needed */
+}
+
+.captcha-grid img {
+  width: 100%; /* Ensure images take up the full width of the grid cell */
+  cursor: pointer;
+  border: 2px solid gray;
+}
+
+.captcha-grid img.selected {
+  border: 2px solid green;
+}

@@ -2,9 +2,11 @@
 import { useState, useEffect } from 'react';
 import { CoinsIcon, GlobeIcon, WalletIcon } from 'lucide-react';
 import FaucetForm from '@/components/FaucetForm';
+import { toast } from 'sonner';
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
+ 
   
   useEffect(() => {
     // Trigger animation after component mounts
@@ -91,6 +93,7 @@ const Index = () => {
             </div>
           </div>
         </section>
+   
       </main>
 
       <footer className="py-8 border-t border-blue-900/30">
