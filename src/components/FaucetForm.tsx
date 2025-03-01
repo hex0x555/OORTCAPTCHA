@@ -87,32 +87,32 @@ const FaucetForm = () => {
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-xl">
+      <form onSubmit={handleSubmit} className="bg-blue-900/30 backdrop-blur-sm border border-blue-800/50 rounded-2xl p-8 shadow-xl">
         <div className="space-y-6">
           <input
             type="text"
             placeholder="Enter Your Wallet Address (0x...) or ETH Mainnet ENS Domain"
             value={walletAddress}
             onChange={(e) => setWalletAddress(e.target.value)}
-            className="w-full p-4 border border-gray-300 rounded-lg text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-lg"
+            className="w-full p-4 border border-blue-800/70 rounded-lg text-yellow-100 bg-blue-900/50 focus:outline-none focus:ring-2 focus:ring-yellow-100/40 placeholder:text-yellow-100/50 text-lg"
             disabled={isLoading}
           />
           
           <button 
             type="submit" 
-            className="w-full bg-gray-700 text-white py-4 px-6 rounded-lg text-lg font-medium hover:bg-gray-800 transition-colors"
+            className="w-full bg-yellow-100 text-blue-900 py-4 px-6 rounded-lg text-lg font-medium hover:bg-yellow-200 transition-colors"
             disabled={isLoading}
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-blue-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
                 Processing...
               </span>
             ) : (
-              <span>Send Me ETH</span>
+              <span>Continue</span>
             )}
           </button>
         </div>
@@ -123,21 +123,21 @@ const FaucetForm = () => {
         />
         
         {transactionHash && (
-          <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+          <div className="mt-6 p-4 bg-blue-800/30 rounded-lg border border-blue-700/50">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Transaction Hash</p>
-                <p className="font-mono text-xs sm:text-sm truncate max-w-[240px] sm:max-w-md text-gray-700">
+                <p className="text-sm text-yellow-100/70">Transaction Hash</p>
+                <p className="font-mono text-xs sm:text-sm truncate max-w-[240px] sm:max-w-md text-yellow-100">
                   {transactionHash}
                 </p>
               </div>
               <button 
                 type="button"
                 onClick={handleCopyToClipboard}
-                className="p-2 hover:bg-gray-200 rounded-md transition-colors"
+                className="p-2 hover:bg-blue-700/50 rounded-md transition-colors"
                 aria-label="Copy transaction hash"
               >
-                <CopyIcon size={16} className="text-gray-700" />
+                <CopyIcon size={16} className="text-yellow-100" />
               </button>
             </div>
           </div>

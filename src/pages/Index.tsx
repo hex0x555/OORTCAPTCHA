@@ -11,7 +11,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-600 via-purple-600 to-purple-500">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
       <header className="py-4 px-4 flex justify-end">
         <div className="bg-white rounded-md px-4 py-2 text-gray-700 font-medium shadow-md">
           Ethereum Sepolia
@@ -20,12 +20,9 @@ const Index = () => {
 
       <main className="flex-1 flex flex-col items-center justify-center pt-10 pb-20">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-wide">
-            ETHEREUM SEPOLIA FAUCET
+          <h1 className="text-4xl md:text-6xl font-bold text-yellow-100 mb-6 tracking-wide font-serif">
+            🌙 MoonDrip
           </h1>
-          <p className="text-xl text-white opacity-90">
-            Fast and reliable. 0.1 Sepolia ETH / 72 hrs.
-          </p>
         </div>
 
         <FaucetForm />
