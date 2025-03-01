@@ -27,11 +27,6 @@ const Index = () => {
                     How it Works
                   </a>
                 </li>
-                <li>
-                  <a href="#faq" className="text-sm text-yellow-100/80 hover:text-yellow-100 transition-colors">
-                    FAQ
-                  </a>
-                </li>
               </ul>
             </nav>
           </div>
@@ -91,42 +86,6 @@ const Index = () => {
                 <h3 className="text-xl font-medium mb-2">3. Receive Tokens</h3>
                 <p className="text-muted-foreground">
                   Tokens will be sent to your wallet immediately with no wait time.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="faq" className="py-16">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-            
-            <div className="max-w-3xl mx-auto space-y-6">
-              <div className="p-6 bg-background rounded-lg border">
-                <h3 className="text-lg font-medium mb-2">What is a testnet faucet?</h3>
-                <p className="text-muted-foreground">
-                  A testnet faucet is a web application that provides free tokens for blockchain test networks. These tokens have no real-world value but allow developers to test their applications without using real cryptocurrency.
-                </p>
-              </div>
-              
-              <div className="p-6 bg-background rounded-lg border">
-                <h3 className="text-lg font-medium mb-2">How many tokens can I request?</h3>
-                <p className="text-muted-foreground">
-                  The amount varies by network, but we provide enough tokens for basic testing purposes. If you need more, you can make another request after 24 hours.
-                </p>
-              </div>
-              
-              <div className="p-6 bg-background rounded-lg border">
-                <h3 className="text-lg font-medium mb-2">Which networks are supported?</h3>
-                <p className="text-muted-foreground">
-                  We currently support Ethereum testnets (Goerli, Sepolia), Polygon Mumbai, Arbitrum Goerli, Optimism Goerli, and more. We regularly add support for new testnets.
-                </p>
-              </div>
-              
-              <div className="p-6 bg-background rounded-lg border">
-                <h3 className="text-lg font-medium mb-2">Is there a rate limit?</h3>
-                <p className="text-muted-foreground">
-                  Yes, to prevent abuse, we limit requests to once per day per IP address and wallet address. This ensures fair distribution of testnet tokens to all users.
                 </p>
               </div>
             </div>
