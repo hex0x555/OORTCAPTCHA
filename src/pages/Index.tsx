@@ -23,12 +23,12 @@ const Index = () => {
             <nav className={`transition-all duration-500 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
               <ul className="flex items-center gap-6">
                 <li>
-                  <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <a href="#how-it-works" className="text-sm text-yellow-100/80 hover:text-yellow-100 transition-colors">
                     How it Works
                   </a>
                 </li>
                 <li>
-                  <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <a href="#faq" className="text-sm text-yellow-100/80 hover:text-yellow-100 transition-colors">
                     FAQ
                   </a>
                 </li>
@@ -42,13 +42,13 @@ const Index = () => {
         <section className="py-12 md:py-20">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
             <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-              <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              <div className="inline-block px-3 py-1 rounded-full bg-yellow-100/20 text-yellow-100 text-sm font-medium mb-4">
                 Free Testnet Tokens
               </div>
               <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
-                Get Testnet Tokens <span className="text-primary">Instantly</span>
+                MoonDrip 🌙
               </h1>
-              <p className={`text-lg text-muted-foreground mx-auto max-w-2xl transition-all duration-700 delay-150 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
+              <p className={`text-lg text-yellow-100/80 mx-auto max-w-2xl transition-all duration-700 delay-150 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
                 Request tokens for testing your applications on popular blockchain test networks. Simple, fast, and completely free.
               </p>
             </div>
@@ -134,15 +134,15 @@ const Index = () => {
         </section>
       </main>
 
-      <footer className="py-8 border-t">
+      <footer className="py-8 border-t border-blue-900/30">
         <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center gap-2 mb-4 md:mb-0">
-              <CoinsIcon className="h-5 w-5 text-primary" />
-              <span className="font-medium">TestnetFaucet</span>
+              <CoinsIcon className="h-5 w-5 text-yellow-100" />
+              <span className="font-medium text-yellow-100">TestnetFaucet</span>
             </div>
             
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-yellow-100/60">
               © {new Date().getFullYear()} TestnetFaucet. All rights reserved.
             </div>
           </div>
