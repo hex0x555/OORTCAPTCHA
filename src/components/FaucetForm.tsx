@@ -17,7 +17,7 @@ const networks = [
       <path d="M11.9978 15.9327L18.1459 12.143L11.9978 9.45377V15.9327Z" fill="#141414"/>
       <path d="M5.84961 12.143L11.9978 15.9327V9.45377L5.84961 12.143Z" fill="#393939"/>
     </svg>,
-    tokenSymbol: 'ETH',
+    tokenSymbol: '',
   },
   {
     id: 'polygon',
@@ -29,7 +29,7 @@ const networks = [
       <path d="M3 17L12 12L21 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
       <path d="M12 2V7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>,
-    tokenSymbol: 'MATIC',
+    tokenSymbol: '',
   },
   {
     id: 'sepolia',
@@ -39,7 +39,7 @@ const networks = [
       <path d="M8 12L16 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
       <path d="M12 8L12 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>,
-    tokenSymbol: 'SEP',
+    tokenSymbol: '',
   },
 ];
 

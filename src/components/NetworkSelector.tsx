@@ -38,9 +38,6 @@ const NetworkSelector = ({
             <h4 className="font-medium">
               {network.name}
             </h4>
-            <p className="text-sm text-yellow-100/70 mt-1">
-              {network.tokenSymbol}
-            </p>
             {selectedNetwork?.id === network.id && (
               <div className="absolute top-3 right-3 text-yellow-100">
                 <ArrowRightIcon size={16} className="opacity-75" />
