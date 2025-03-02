@@ -13,7 +13,7 @@ Not only does this improve the data labeling pipeline for OORT, but it also enab
 
 ## What technologies are used for this project?
 
-This project is built with .
+This project is built with 
 
 - Tensorflow
 - Sepolia
