@@ -15,3 +15,7 @@ Reinforcement learning is applied to the hashed metadata, continuously training 
 The protocol not only streamlines OORT’s data labeling pipeline but also introduces a transparent and incentivized validation mechanism for the decentralized network of data contributors. By recording data validation on-chain, contributors can be rewarded with tokens, reputation scores, or other incentive mechanisms, generating value, accountability, and accuracy in the dataset. This verifiable ledger of data validation creates a trustless environment where high-quality contributions are provably recognized.
 
 The on-chain engagement of human validators solving the CAPTCHA can also serve as a proof-of-humanity metric which can be integrated into broader identity verification frameworks or SDKs, such as Gitcoin Passport, to establish credibility in other applications. OORTCaptcha’s innovative solution not only strengthens AI training and data validation but also expands its utility across Web3 ecosystems, reinforcing sybil resistance and human verification at scale.
+
+## Model Code and Model
+
+You can find the model code [here](https://github.com/cosmasken/py-backend) and the model itself [here](https://drive.google.com/file/d/1AEsBZmaTi4UvnvvpZLwPNlI2dyagF5Uh/view?usp=drive_link)
