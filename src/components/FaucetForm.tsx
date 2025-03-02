@@ -5,6 +5,20 @@ import TokenAnimation from './TokenAnimation';
 import CaptchaGrid from './CaptchaGrid';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { useSDK } from '@metamask/sdk-react';
+import { MetaMaskSDK } from "@metamask/sdk"
+
+const MMSDK = new MetaMaskSDK()
+const provider = MMSDK.getProvider()
+
+async function handleConnectAndSign() {
+  try {
+    const signature = await MMSDK.connectAndSign({ msg: "Hello in one go!" })
+    console.log("Signature:", signature)
+  } catch (err) {
+    console.error("Error with connectAndSign:", err)
+  }
+}
 
 const networks = [
   {
@@ -67,26 +81,8 @@ const FaucetForm = () => {
     }
   };
 
-  useEffect(() => {
-    // Fetch CAPTCHA images on component mount
-    axios.get('http://localhost:5000/generate_captcha')
-      .then(response => {
-        setGridImages(response.data.grid_images);
-      })
-      .catch(error => {
-        console.error('Error fetching CAPTCHA images:', error);
-      });
-  }, []);
 
-  const handleImageClick = (index) => {
-    setSelectedImages(prevSelectedImages => {
-      if (prevSelectedImages.includes(index)) {
-        return prevSelectedImages.filter(image => image !== index);
-      } else {
-        return [...prevSelectedImages, index];
-      }
-    });
-  };
+
 
   const handleVerifyCaptcha = () => {
     axios.post('http://localhost:5000/verify_captcha', { selectedImages })
@@ -94,6 +90,7 @@ const FaucetForm = () => {
         if (response.data.result === 'Correct') {
           setVerified(true);
           toast.success('CAPTCHA verified successfully');
+          handleConnectAndSign();
         } else {
           toast.error('CAPTCHA verification failed');
         }
@@ -103,19 +100,7 @@ const FaucetForm = () => {
       });
   };
 
-  const handleVerifySignature = () => {
-    axios.post('http://localhost:5000/verify_signature', { message, signature, walletAddress })
-      .then(response => {
-        if (response.data.result === 'Signature verified') {
-          alert('Signature verified successfully');
-        } else {
-          alert('Signature verification failed');
-        }
-      })
-      .catch(error => {
-        console.error('Error verifying signature:', error);
-      });
-  };
+  
 
   const handleNetworkSelect = (network: typeof networks[0]) => {
     setSelectedNetwork(network);
@@ -146,20 +131,22 @@ const FaucetForm = () => {
 
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSuccess(true);
-      setTransactionHash('0x' + Math.random().toString(16).substr(2, 64));
-      toast.success("Tokens sent!");
-
-      // Reset success state after animation
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 3000);
-    }, 2000);
+   
   };
 
+  const [account, setAccount] = useState<string>();
+  const { sdk, connected, connecting, provider, chainId } = useSDK();
+
+  const connect = async () => {
+    try {
+      const accounts = await sdk?.connect();
+      setAccount(accounts?.[0]);
+    } catch(err) {
+      console.warn(`failed to connect..`, err);
+    }
+  };
+
+  
   return (
     <div className="w-full max-w-2xl mx-auto">
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -211,7 +198,7 @@ const FaucetForm = () => {
 
         {showCaptcha && (
           <div className="pt-4">
-            <CaptchaGrid onVerify={handleVerify} />
+            <CaptchaGrid onVerify={handleVerifyCaptcha} />
             <button 
               type="button" 
               className="faucet-button w-full mt-4"

@@ -1,21 +1,8 @@
-
 import { useState, useEffect } from "react";
 import CaptchaTile from "./CaptchaTile";
+import BucketImageFetcher from "./BucketImageFetcher";
+import axios from "axios";
 
-// Sample image URLs for the captcha tiles - image segmentation captcha
-const sampleImages = [
-  "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=200&h=200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=200&h=200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=200&h=200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=200&h=200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=200&h=200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=200&h=200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=200&h=200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=200&h=200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=200&h=200&auto=format&fit=crop",
-];
-
-// Array of Google Fonts to randomly choose from
 const fontOptions = [
   "Roboto",
   "Open Sans",
@@ -27,7 +14,6 @@ const fontOptions = [
   "Poppins"
 ];
 
-// Sans-serif font options for the title
 const sansSerifFontOptions = [
   "Roboto",
   "Open Sans",
@@ -49,13 +35,30 @@ const CaptchaGrid = ({ onVerify }: CaptchaGridProps) => {
   const [titleFont, setTitleFont] = useState("");
   const [descriptionFont, setDescriptionFont] = useState("");
   const [buttonFont, setButtonFont] = useState("");
+  const [sampleImages, setSampleImages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Randomly select fonts when the component mounts
     setTitleFont(sansSerifFontOptions[Math.floor(Math.random() * sansSerifFontOptions.length)]);
     setDescriptionFont(fontOptions[Math.floor(Math.random() * fontOptions.length)]);
     setButtonFont(fontOptions[Math.floor(Math.random() * fontOptions.length)]);
+    fetchCaptchaImages();
   }, []);
+
+  const fetchCaptchaImages = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get('http://localhost:5000/generate_captcha');
+      setSampleImages(response.data.grid_images);
+    } catch (error) {
+      console.error('Error fetching CAPTCHA images:', error);
+      setError('Error fetching CAPTCHA images. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleTileToggle = (id: number, selected: boolean) => {
     const newSelectedTiles = new Set(selectedTiles);
@@ -67,15 +70,19 @@ const CaptchaGrid = ({ onVerify }: CaptchaGridProps) => {
     setSelectedTiles(newSelectedTiles);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setVerifying(true);
-    
-    // Simulate verification (in a real app, you'd verify against actual traffic light positions)
-    setTimeout(() => {
-      // For this example, let's pretend the verification always succeeds
-      onVerify(true);
+    try {
+      const response = await axios.post('http://localhost:5000/verify_captcha', {
+        selectedImages: Array.from(selectedTiles).map(index => sampleImages[index])
+      });
+      onVerify(response.data.result === 'Correct');
+    } catch (error) {
+      console.error('Error verifying CAPTCHA:', error);
+      onVerify(false);
+    } finally {
       setVerifying(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -95,19 +102,35 @@ const CaptchaGrid = ({ onVerify }: CaptchaGridProps) => {
             Identify the parts of the image containing code or matrix patterns.
           </p>
         </div>
-        
-        <div className="grid grid-cols-3 gap-2 mb-6">
-          {sampleImages.map((image, index) => (
-            <CaptchaTile 
-              key={index} 
-              id={index} 
-              image={image}
-              onToggle={handleTileToggle}
-            />
-          ))}
-        </div>
-        
-      
+
+        {loading ? (
+          <div className="flex justify-center items-center">
+            <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+            
+            </div>
+          </div>
+        ) : error ? (
+          <div className="text-red-500 text-center mb-6">{error}</div>
+        ) : (
+          <div className="grid grid-cols-3 gap-2 mb-6">
+            {sampleImages.map((image, index) => (
+              <CaptchaTile 
+                key={index} 
+                id={index} 
+                image={image}
+                onToggle={handleTileToggle}
+              />
+            ))}
+          </div>
+        )}
+        <button 
+          className="w-full py-2 px-4 bg-blue-500 text-white rounded-lg"
+          onClick={handleSubmit}
+          disabled={verifying}
+          style={{ fontFamily: buttonFont }}
+        >
+          {verifying ? "Verifying..." : "Submit"}
+        </button>
       </div>
     </div>
   );

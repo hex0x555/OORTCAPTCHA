@@ -1,6 +1,4 @@
-
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
 
 // Array of Google Fonts to randomly choose from
 const fontOptions = [
@@ -22,7 +20,7 @@ interface CaptchaTileProps {
   onToggle: (id: number, selected: boolean) => void;
 }
 
-const CaptchaTile = ({ id, image, onToggle }: CaptchaTileProps) => {
+const CaptchaTile = ({ id, image, onToggle }) => {
   const [selected, setSelected] = useState(false);
   const [randomFont, setRandomFont] = useState("");
   
@@ -41,16 +39,12 @@ const CaptchaTile = ({ id, image, onToggle }: CaptchaTileProps) => {
   return (
     <div 
       onClick={handleClick}
-      className={cn(
-        "relative aspect-square overflow-hidden rounded-md cursor-pointer transition-all duration-300 transform",
-        "hover:shadow-md hover:scale-[1.02]",
-        selected ? "ring-2 ring-[#0EA5E9]/70 scale-[0.98]" : "ring-1 ring-gray-200/30"
-      )}
+      className={`relative aspect-square overflow-hidden rounded-md cursor-pointer transition-all duration-300 transform hover:shadow-md hover:scale-[1.02] ${selected ? "ring-2 ring-[#0EA5E9]/70 scale-[0.98]" : "ring-1 ring-gray-200/30"}`}
       style={{ fontFamily: randomFont }}
     >
       <div className="absolute inset-0 bg-gray-100/50 animate-pulse" />
       <img 
-        src={image} 
+        src={`data:image/png;base64,${image}`} 
         alt={`Captcha tile ${id}`} 
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
         loading="lazy"

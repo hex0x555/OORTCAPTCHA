@@ -6,9 +6,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
+import { MetaMaskProvider } from '@metamask/sdk-react';
+import React from "react";
+
 const queryClient = new QueryClient();
 
 const App = () => (
+  <React.StrictMode>
+    <MetaMaskProvider debug={false} sdkOptions={{
+      logging:{
+          developerMode: false,
+        },
+        checkInstallationImmediately: false, // This will automatically connect to MetaMask on page load
+        dappMetadata: {
+          name: "OOR TCaptcha",
+          url: window.location.host,
+        }
+    }}>
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
@@ -22,6 +36,8 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
+  </MetaMaskProvider>
+  </React.StrictMode>
 );
 
 // // export default App;
