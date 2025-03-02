@@ -1,69 +1,25 @@
-# Welcome to your Lovable project
+# Welcome to OORTCaptcha 
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/d9093924-65e6-498a-9212-7454a21d3b2f
+OORT takes in data from a decentralized community of data contributors. This data is currently validated by a validator community that is rewarded for their work. The validated data is then submitted to OORT Datahub. The issue with this is that there’s so way to prevent data validators from validating data that they have also contributed, which is a conflict of interest and not an accurate way to ensure correctness of the data-labelling. It also isn’t scalable as the volume of community contributed data flows into OORT. 
 
-## How can I edit this code?
+Our solution is an AI data labelling and on-chain data validation protocol. OORTCaptcha increases sybil resistance in data validation by reducing the reliance on a subset of OORT users who validate community contributed data, and expands the network of data validators to any user of the internet through a familiar process: CAPTCHA verification. 
 
-There are several ways of editing your application.
+Our machine-learning model is trained on OORTs pre-validated data in the Datahub, randomly picks a set of images from the dataset and makes a prediction of the object in the image. This annotation prediction generates a CAPTCHA prompt which presents a set of images for the user to validate the prediction of the AI. Once the user verifies the images, the annotation data and the image link hosted on OORT data storage is hashed on chain. Reinforcement learning is trained on the hashed metadata, and as new images are contributed to OORT, our AI agent is able to correctly predict the label with 88% accuracy and bypass the need for the human-driven data validation. This prediction is sent to CAPTCHA for human verification. This creates a machine-learning data validation pipeline and continues to train and reinforce the model. As the model improves, the prediction accuracy is expected to improve significantly. 
 
-**Use Lovable**
+Not only does this improve the data labeling pipeline for OORT, but it also enables the decentralized network of data contributors to be rewarded for contributing valid data through token rewards, reputation, or any other metric by having an on-chain ledger of provable data validation. For the human validators performing the CAPTCHA, their participation in our protocol can be used as a proof of humanity metric which can be further implemented into other protocols or SDKs, such as Gitcoin Passport. 
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d9093924-65e6-498a-9212-7454a21d3b2f) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
 ## What technologies are used for this project?
 
 This project is built with .
 
+- Tensorflow
+- Sepolia
+- Sample dataset provided by OORT
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/d9093924-65e6-498a-9212-7454a21d3b2f) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
