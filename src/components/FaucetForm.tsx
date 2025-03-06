@@ -13,7 +13,7 @@ const provider = MMSDK.getProvider()
 
 async function handleConnectAndSign() {
   try {
-    const signature = await MMSDK.connectAndSign({ msg: "Hello in one go!" })
+    const signature = await MMSDK.connectAndSign({ msg: "Are You sure You are HUman" })
     console.log("Signature:", signature)
   } catch (err) {
     console.error("Error with connectAndSign:", err)
@@ -199,13 +199,13 @@ const FaucetForm = () => {
         {showCaptcha && (
           <div className="pt-4">
             <CaptchaGrid onVerify={handleVerifyCaptcha} />
-            <button 
+            {/* <button 
               type="button" 
               className="faucet-button w-full mt-4"
               onClick={handleVerifyCaptcha}
             >
               Verify CAPTCHA
-            </button>
+            </button> */}
           </div>
         )}
 
